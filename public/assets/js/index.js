@@ -9,7 +9,12 @@ var activeNote = {};
 
 // A function for getting all notes from the db
 var getNotes = function() {
-  
+  $.ajax({
+      url: "api/notes",
+      method: "GET"
+  }).then(function(noteData) {
+      console.log(noteData)
+  })
 };
 
 // A function for saving a note to the db
@@ -29,7 +34,7 @@ var renderActiveNote = function() {
 
 // Get the note data from the inputs, save it to the db and update the view
 var handleNoteSave = function() {
-  
+    $saveNoteBtn.css("display", "none");
 };
 
 // Delete the clicked note
@@ -50,7 +55,9 @@ var handleNewNoteView = function() {
 // If a note's title or text are empty, hide the save button
 // Or else show it
 var handleRenderSaveBtn = function() {
-  
+  if ($noteText !== null) {
+      $saveNoteBtn.css("display", "block");
+  };
 };
 
 // Render's the list of note titles
