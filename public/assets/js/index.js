@@ -7,23 +7,35 @@ var $noteList = $(".list-container .list-group");
 // activeNote is used to keep track of the note in the textarea
 var activeNote = {};
 
+let ogNote
+
 // A function for getting all notes from the db
 var getNotes = function () {
-    $.get("/api/notes", function (noteData) {
-        console.log(noteData)
-        return noteData;
-        // for (i = 1; i < noteData.length; i++) {
-        //     let item = $("<li>").attr({ "class": "list-group-item", "id": "title" + i })
-        //     let btn = $("<button>").attr("class", "delete-note")
-        //     btn.text("delete")
-        //     item.text(noteData[i].title);
-        //     item.append(btn)
-        //     $(".list-group").append(item);
-        // };
-    })
+    // $.get("/api/notes", function (noteData) {
+    //     console.log(noteData)
+    //     ogNote = noteData 
+    //     // for (i = 1; i < noteData.length; i++) {
+    //     //     let item = $("<li>").attr({ "class": "list-group-item", "id": "title" + i })
+    //     //     let btn = $("<button>").attr("class", "delete-note")
+    //     //     btn.text("delete")
+    //     //     item.text(noteData[i].title);
+    //     //     item.append(btn)
+    //     //     $(".list-group").append(item);
+    //     // };
+    // })
+    // return ogNote;
+    $.ajax({
+        url: "/api/notes",
+        type: 'Get',
+        async: false,
+        success: function (noteData) {
+            ogNote = noteData;
+        }
+    });
+    return ogNote;
 };
 
-console.log(getNotes())
+// console.log(getNotes())
 
 // $(".delete-note").on("click", function(event) {
 //     alert("click")
@@ -106,14 +118,14 @@ var renderNoteList = function (notes) {
 
 // Gets notes from the db and renders them to the sidebar
 var getAndRenderNotes = function () {
-    // console.log(getNotes())
-    // for (i = 1; i < noteData.length; i++) {
-    //     let item = $("<li>").attr({ "class=": "list-group-item", "id": "title" + i })
-    //     let btn = $("<button>").attr("class", "delete-note")
-    //     item.text(noteData[i].title);
-    //     item.append(btn)
-    //     $(".list-group").append(item);
-    // };
+    let noteData = getNotes()
+    for (i = 1; i < noteData.length; i++) {
+        let item = $("<li>").attr({ "class": "list-group-item", "id": "title" + i })
+        let btn = $("<button>").attr("class", "delete-note")
+        item.text(noteData[i].title);
+        item.append(btn)
+        $(".list-group").append(item);
+    };
 };
 
 $saveNoteBtn.on("click", handleNoteSave);
