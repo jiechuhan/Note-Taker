@@ -22,4 +22,11 @@ module.exports = function(app) {
         console.log(noteData);
         res.json(noteData);
     })
+
+    // app.delete("/api/notes", function(req, res) {
+    //     if () {
+    //         noteData.splice(index, 1);
+    //         res.json(noteData)
+    //     }
+    // })
 }
