@@ -28,14 +28,14 @@ module.exports = function (app) {
         res.json(noteData);
     });
 
-    app.delete("/api/notes", function (req, res) {
+    app.delete("/api/notes/:title", function (req, res) {
         // console.log(req.body)
-        var deleteData = req.body
+        var deleteData = req.params.title
         // console.log(deleteData)
-        console.log(noteData)
+        console.log(deleteData)
         for (i=0; i<noteData.length; i++) {
             // console.log(noteData[i])
-            if (deleteData.title === noteData[i].title) {
+            if (deleteData === noteData[i].title) {
                 noteData.splice(i, 1)
             };
         };

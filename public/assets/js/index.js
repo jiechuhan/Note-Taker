@@ -27,10 +27,10 @@ var saveNote = function (note) {
 
 // A function for deleting a note from the db
 var deleteNote = function (title) {
+    console.log(title)
     $.ajax({
-        url: "/api/notes",
-        method: "DELETE",
-        data: title
+        url: `/api/notes/${title}`,
+        method: "DELETE"
     }).then(function (data) {
         if (data) {
             console.log(data);
@@ -66,11 +66,14 @@ var handleNoteSave = function () {
 // Delete the clicked note
 var handleNoteDelete = function (event) {
     event.preventDefault();
-    var activeNote = {
-        title: $noteTitle.val(),
-        text: $noteText.val()
+    console.log(event)
+    var id = event.target.id.split("-")[1]
+    console.log(id)
+    activeNote = {
+        title: $("#title-" + id).text()
     }
-    $(this).remove();
+    // $(this).remove();
+    console.log(activeNote);
     deleteNote(activeNote.title);
 };
 
@@ -109,12 +112,14 @@ var handleRenderSaveBtn = function () {
 
 // Render's the list of note titles
 var renderNoteList = function (notes) {
-    // console.log(notes)
+     console.log('render',notes)
     $(".list-group").empty();
     for (i = 0; i < notes.length; i++) {
-        let item = $("<li>").attr({ "class": "list-group-item d-flex", "id": "title" + i });
-        let btn = $("<button>").attr("class", "delete-note fas fas-trash ml-5");
-        let title = $("<h6>").text(notes[i].title);
+        let item = $("<li>").attr({ "class": "list-group-item d-flex", "id": "listitem-" + i });
+        let btn = $("<button>").attr({"class": "delete-note fas fas-trash ml-5", "id": "button-" + i});
+        let title = $("<h6>").attr({"id": "title-" + i})
+        btn.text("Delete")
+        title.text(notes[i].title);
         item.append(title);
         item.append(btn);
         $(".list-group").append(item);
