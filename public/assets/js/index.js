@@ -51,6 +51,7 @@ var renderActiveNote = function () {
     };
 };
 
+
 // Get the note data from the inputs, save it to the db and update the view
 var handleNoteSave = function () {
     activeNote = {
@@ -62,6 +63,7 @@ var handleNoteSave = function () {
     $noteTitle.val("");
     $noteText.val("");
 };
+
 
 // Delete the clicked note
 var handleNoteDelete = function (event) {
@@ -77,9 +79,10 @@ var handleNoteDelete = function (event) {
     deleteNote(activeNote.title);
 };
 
+
 // Sets the activeNote and displays it
 var handleNoteView = function () {
-    var title = $(this).text();
+    var title = $(this).text().split("Delete")[0];
     console.log(title);
     $.get('/api/notes', function (data) {
         console.log(data)
@@ -93,11 +96,13 @@ var handleNoteView = function () {
     });
 };
 
+
 // Sets the activeNote to and empty object and allows the user to enter a new note
 var handleNewNoteView = function () {
     activeNote = {};
     renderActiveNote();
 };
+
 
 // If a note's title or text are empty, hide the save button
 // Or else show it
